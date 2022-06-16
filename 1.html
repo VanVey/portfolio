@@ -6,6 +6,8 @@
   <!-- Настройка viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>...</title>
+  <script src="https://atuin.ru/demo/js/anime.min.js"></script>
+  <script src="1.js"></script>
     <style>
 .board {
     display: flex;
@@ -43,6 +45,188 @@
 {
     font-size: 1em;
 }
+.slider * {
+    box-sizing: border-box;
+}    
+.slider {
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin: 20px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 16px 20px rgba(0,0,0,0.2);
+}
+.slider .item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+.slider .item:not(.is-active) {
+    opacity: 0;
+    pointer-events: none;
+}
+.slider .item:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+.slider .item .imgs {
+    position: relative;
+    width: 60%;
+    padding-top: 60%;
+}
+.slider .item .imgs .grid {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    grid-column-gap: 32px;
+    grid-row-gap: 32px;
+    transform: rotate(-20deg);
+}
+.slider .item .img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    will-change: transform;
+    box-shadow: -2px 4px 12px rgba(0,0,0,0.2), -8px 16px 20px rgba(0,0,0,0.2);
+    background: #000;
+}
+.slider .item .img img {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    opacity: 0.7;
+    transition: opacity 1s;
+}
+.slider .item .img:hover img {
+    opacity: 1;
+}
+.slider .item .img-1 {
+    grid-area: 1/1/7/5;
+}
+.slider .item .img-2 {
+    grid-area: 2/5/7/13;
+}
+.slider .item .img-3 {
+    grid-area: 7/1/12/9;
+}
+.slider .item .img-4 {
+    grid-area: 7/9/13/13;
+}
+.slider .item .content {
+    pointer-events: none;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 120px;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.5;
+    font-weight: 600;
+    font-family: Verdana, sans-serif;   
+    text-align: center;
+    text-shadow: 0 0 12px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.7);  
+    color: #BFE2FF;
+    font-size: 44px;
+    text-transform: uppercase;  
+}
+.slider .item .content .item-text {
+    color: #FFF;
+    font-size: 20px;
+    margin-top: 20px;
+}
+.slider .item .content .item-title .letter {
+    display: inline-block;
+}
+.slider .nav .next, 
+.slider .nav .prev {
+    height: 80px;
+    width: 80px;
+    position: absolute;
+    top: calc(50% - 40px);
+    cursor: pointer;
+    z-index: 4;
+    transition: transform 0.3s;
+}
+.slider .nav .next {
+    right: 20px;
+}
+.slider .nav .next:hover {
+    transform: translateX(10px);
+}
+.slider .nav .prev {
+    left: 20px;
+}
+.slider .nav .prev:hover {
+    transform: translateX(-10px);
+}
+.slider .nav .next svg, 
+.slider .nav .prev svg {
+    stroke: #BFE2FF;
+    transition: stroke 0.3s;
+}
+.slider .nav .next:hover svg, 
+.slider .nav .prev:hover svg {
+    stroke: #FFF;
+}
+@media (max-width: 767px) {
+    .slider {
+        height: 400px;
+    }
+    .slider .nav .next, 
+    .slider .nav .prev {
+        height: 40px;
+        width: 40px;
+        top: calc(50% - 20px);
+    }
+    .slider .nav .next {
+        right: 10px;
+    }
+    .slider .nav .prev {
+        left: 10px;
+    }
+    .slider .item .content {
+        font-size: 20px;
+        padding: 0 60px;
+    }
+    .slider .item .content .item-text {
+        font-size: 13px;
+    }
+}
+@media (max-width: 460px) {
+    .slider .item .imgs {
+        width: 100%;
+        padding-top: 100%;
+    }
+}
     </style>
   <!-- Bootstrap CSS (jsDelivr CDN) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -55,8 +239,7 @@
         </div>
         <div style="display: flex; justify-content: space-evenly;">
             <br>
-            <p><img src="https://w7.pngwing.com/pngs/641/131/png-transparent-green-area-angle-font-s-of-pupils-angle-text-rectangle.png" alt="8" class="img-fluid">мое фото</p>
-            <p class="text1">О бо мне <br>меня зовут Иван</p>
+            <p><img src="https://w7.pngwing.com/pngs/641/131/png-transparent-green-area-angle-font-s-of-pupils-angle-text-rectangle.png" alt="8" class="img-fluid"></p><p class="text1">О бо мне <br>меня зовут Иван</p>
         </div>
         <div>
             <p class="text2">Какие языки программирования я знаю</p>
@@ -72,6 +255,63 @@
         </div>
         <div style="display: flex; justify-content: space-evenly;">
             <p><img src="https://w7.pngwing.com/pngs/641/131/png-transparent-green-area-angle-font-s-of-pupils-angle-text-rectangle.png" alt="8" class="img-fluid"></p><p class="text3 " style=" display: flex;">JavaScript</p>
-        </div>      
+        </div> 
+        <div class="slider">
+            <div class="nav">
+                <div class="prev">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>            
+                </div>    
+                <div class="next">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>                
+                </div>
+            </div>
+            <div class="item is-active" style="background-image: url(bg-photo.jpg)">
+                <div class="content">
+                    <div class="item-title">Заголовок</div>
+                    <div class="item-text">Описание</div>
+                </div>
+                <div class="imgs">
+                    <div class="grid">
+                        <div class="img img-1">
+                            <img src="photo-1.jpg"/>
+                        </div>
+                        <div class="img img-2">
+                            <img src="photo-2.jpg"/>
+                        </div>
+                        <div class="img img-3">
+                            <img src="photo-3.jpg"/>
+                        </div>
+                        <div class="img img-4">
+                            <img src="photo-4.jpg"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Еще слайды -->
+            
+            <div class="item" style="background-image: url(bg-photo.jpg)">
+                <div class="content">
+                    <div class="item-title">Заголовок</div>
+                    <div class="item-text">Описание</div>
+                </div>
+                <div class="imgs">
+                    <div class="grid">
+                        <div class="img img-1">
+                            <img src="photo-1.jpg"/>
+                        </div>
+                        <div class="img img-2">
+                            <img src="photo-2.jpg"/>
+                        </div>
+                        <div class="img img-3">
+                            <img src="photo-3.jpg"/>
+                        </div>
+                        <div class="img img-4">
+                            <img src="photo-4.jpg"/>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>     
 </body>
 </html>
