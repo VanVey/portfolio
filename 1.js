@@ -142,3 +142,7 @@ function init() {
     prevBtn.onclick = prev;
 }
 document.addEventListener("DOMContentLoaded", init);
+function a()
+{
+    
+}
